@@ -33,7 +33,7 @@ title: ICME 2025 Grand Challenge | JND Prediction for 3D Point Cloud Compression
 <a id="introduction"></a>
 ## Introduction
 
-Point clouds are a fundamental 3D representation widely used in immersive media, autonomous driving, digital twins, AR/VR, and telepresence. In practice, point cloud data often undergo compression, transmission, and rendering under strict bandwidth/storage/compute constraints, which inevitably introduces perceptual quality degradation. Accurate perceptual quality assessment is therefore critical for user experience and reliable downstream applications. :contentReference[oaicite:4]{index=4}
+Point clouds are a fundamental 3D representation widely used in immersive media, autonomous driving, digital twins, AR/VR, and telepresence. In practice, point cloud data often undergo compression, transmission, and rendering under strict bandwidth/storage/compute constraints, which inevitably introduces perceptual quality degradation. Accurate perceptual quality assessment is therefore critical for user experience and reliable downstream applications. 
 
 **Just Noticeable Difference (JND)** describes the minimum distortion level at which degradation becomes perceptible to human observers. JND modeling enables perceptually optimized compression by removing imperceptible redundancies while preserving visually critical information. However, point cloud JND modeling is challenging due to irregular spatial distributions, varying densities, complex geometry, and rich attributes (e.g., color), and because distortions can be content-dependent across geometry and attributes. :contentReference[oaicite:5]{index=5}
 
