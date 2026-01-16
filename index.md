@@ -1,258 +1,153 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>ICME 2026 Grand Challenge | JND Prediction for Point Cloud Compression</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+---
+layout: default
+title: ICME 2025 Grand Challenge | JND Prediction for 3D Point Cloud Compression
+---
 
-  <!-- MathJax for equations -->
-  <script>
-    MathJax = {
-      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-  <style>
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      margin: 0;
-      padding: 0;
-      line-height: 1.6;
-      color: #222;
-      background-color: #ffffff;
-    }
-
-    header {
-      background: #003366;
-      color: #fff;
-      padding: 1.2rem 0;
-    }
-
-    header h1 {
-      margin: 0;
-      text-align: center;
-      font-size: 1.8rem;
-    }
-
-    header h2 {
-      margin: 0.4rem 0 0;
-      text-align: center;
-      font-weight: normal;
-      font-size: 1.1rem;
-    }
-
-    nav {
-      background: #f2f2f2;
-      padding: 0.6rem;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
-    }
-
-    nav a {
-      margin: 0 10px;
-      color: #003366;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    nav a:hover {
-      text-decoration: underline;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 2rem;
-    }
-
-    section {
-      margin-bottom: 3rem;
-    }
-
-    section h2 {
-      border-bottom: 2px solid #003366;
-      padding-bottom: 0.4rem;
-      color: #003366;
-    }
-
-    ul {
-      margin-left: 1.2rem;
-    }
-
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-top: 1rem;
-    }
-
-    table, th, td {
-      border: 1px solid #aaa;
-    }
-
-    th, td {
-      padding: 0.6rem;
-      text-align: left;
-    }
-
-    footer {
-      background: #f2f2f2;
-      text-align: center;
-      padding: 1rem;
-      color: #555;
-      font-size: 0.9rem;
-    }
-
-    .note {
-      background: #eef5ff;
-      padding: 1rem;
-      border-left: 4px solid #003366;
-      margin: 1rem 0;
-    }
-  </style>
-</head>
-
-<body>
-
-<header>
-  <h1>ICME 2026 Grand Challenge</h1>
-  <h2>Perceptual JND Prediction for 3D Point Cloud Compression</h2>
-</header>
+# ICME 2026 Grand Challenge
+## Perceptual Just Noticeable Difference (JND) Modeling for 3D Point Cloud Compression
 
 <nav>
-  <a href="#home">Home</a>
-  <a href="#introduction">Introduction</a>
-  <a href="#dataset">Dataset</a>
-  <a href="#tasks">Tasks</a>
-  <a href="#evaluation">Evaluation</a>
-  <a href="#submission">Submission</a>
-  <a href="#dates">Dates</a>
-  <a href="#organizers">Organizers</a>
+  <a href="#home">Home</a> •
+  <a href="#introduction">Introduction</a> •
+  <a href="#dataset">Dataset</a> •
+  <a href="#tasks">Tasks</a> •
+  <a href="#evaluation">Evaluation</a> •
+  <a href="#submission">Submission</a> •
+  <a href="#dates">Challenge Dates</a> •
+  <a href="#organizers">Organizers</a> •
+  <a href="#contact">Contact</a>
 </nav>
 
-<div class="container">
+---
 
-<section id="home">
-  <h2>Home</h2>
-  <p>
-    This Grand Challenge focuses on <strong>Just Noticeable Difference (JND)</strong>
-    modeling for perceptual quality assessment in <strong>3D point cloud compression</strong>.
-    The challenge promotes human-centric perceptual modeling and perceptually optimized
-    compression techniques.
-  </p>
-</section>
+<a id="home"></a>
+## Home
 
-<section id="introduction">
-  <h2>Introduction</h2>
-  <p>
-    Point clouds are a fundamental 3D representation for immersive media, autonomous driving,
-    digital twins, AR/VR, and telepresence. In practical systems, compression is unavoidable,
-    leading to perceptual quality degradation.
-  </p>
-  <p>
-    Just Noticeable Difference (JND) characterizes the minimum distortion level that becomes
-    perceptible to human observers. Accurate JND modeling enables perceptually optimized
-    compression by removing imperceptible redundancies while preserving visually critical
-    information.
-  </p>
-  <p>
-    JND modeling for point clouds is challenging due to irregular spatial distributions,
-    complex geometry, varying densities, and rich attributes such as color.
-  </p>
-</section>
+**Challenge Theme:** Human-centric perceptual modeling for point clouds: **JND prediction** under compression distortions.  
+**Keywords:** Point Cloud Compression, Perceptual Quality, JND, PKU-JND, G-PCC, Human Visual System
 
-<section id="dataset">
-  <h2>Dataset: PKU-JND</h2>
-  <ul>
-    <li>230 reference point cloud models across 5 content categories</li>
-    <li>5,750 geometry-distorted samples</li>
-    <li>7,130 attribute-distorted samples</li>
-    <li>Distortions generated using MPEG G-PCC</li>
-    <li>Subjective experiments with 20–31 participants</li>
-  </ul>
+> 🔔 *This page is a template for ICME 2025. Dates and platform links will be updated if the organizing committee revises the schedule.*
 
-  <div class="note">
-    Dataset download links will be released with the official challenge announcement.
-  </div>
-</section>
+---
 
-<section id="tasks">
-  <h2>Tasks</h2>
-  <p>
-    Participants are invited to develop algorithms to predict subjective JND thresholds
-    for compressed point clouds, including:
-  </p>
-  <ul>
-    <li>Geometry JND prediction</li>
-    <li>Attribute (color) JND prediction</li>
-    <li>Unified perceptual JND modeling</li>
-  </ul>
-</section>
+<a id="introduction"></a>
+## Introduction
 
-<section id="evaluation">
-  <h2>Evaluation</h2>
-  <p>
-    Submissions will be evaluated on a held-out test set using correlation-based and
-    error-based metrics:
-  </p>
+Point clouds are a fundamental 3D representation widely used in immersive media, autonomous driving, digital twins, AR/VR, and telepresence. In practice, point cloud data often undergo compression, transmission, and rendering under strict bandwidth/storage/compute constraints, which inevitably introduces perceptual quality degradation. Accurate perceptual quality assessment is therefore critical for user experience and reliable downstream applications. :contentReference[oaicite:4]{index=4}
 
-  <ul>
-    <li>Pearson Linear Correlation Coefficient (PLCC)</li>
-    <li>Spearman Rank-Order Correlation Coefficient (SRCC)</li>
-    <li>Kendall Rank Correlation Coefficient (KRCC)</li>
-    <li>Root Mean Squared Error (RMSE)</li>
-  </ul>
+**Just Noticeable Difference (JND)** describes the minimum distortion level at which degradation becomes perceptible to human observers. JND modeling enables perceptually optimized compression by removing imperceptible redundancies while preserving visually critical information. However, point cloud JND modeling is challenging due to irregular spatial distributions, varying densities, complex geometry, and rich attributes (e.g., color), and because distortions can be content-dependent across geometry and attributes. :contentReference[oaicite:5]{index=5}
 
-  <p>
-    Final ranking score:
-    $$\text{Score} = \frac{\text{PLCC} + \text{SRCC}}{2}$$
-  </p>
+To advance research in this area, we introduce **PKU-JND**, a large-scale benchmark dedicated to JND measurement for point cloud compression, and host this Grand Challenge to encourage robust JND prediction methods and fair comparison under a standardized evaluation protocol. :contentReference[oaicite:6]{index=6}
 
-  <div class="note">
-    Participants must use only the official training data. External data usage is prohibited.
-  </div>
-</section>
+---
 
-<section id="submission">
-  <h2>Submission</h2>
-  <p>
-    Participants must submit predicted JND values for the official test set in the provided
-    JSON format. Each team may submit up to three results per day.
-  </p>
+<a id="dataset"></a>
+## Dataset: PKU-JND
 
-  <div class="note">
-    The official competition platform and submission instructions will be announced.
-  </div>
-</section>
+**PKU-JND** is the first large-scale benchmark dataset for **JND measurement in point cloud compression**. It is built via carefully designed subjective experiments, aiming to comprehensively capture human perceptual sensitivity to point cloud distortions. :contentReference[oaicite:7]{index=7}
 
-<section id="dates">
-  <h2>Challenge Dates</h2>
-  <table>
-    <tr><th>Event</th><th>Date (UTC)</th></tr>
-    <tr><td>Registration Open</td><td>2026-02-15</td></tr>
-    <tr><td>Training Data Release</td><td>2026-03-10</td></tr>
-    <tr><td>Result Submission Deadline</td><td>2026-04-25</td></tr>
-    <tr><td>Technical Paper Deadline</td><td>2026-05-10</td></tr>
-    <tr><td>Final Decisions</td><td>2026-05-15</td></tr>
-    <tr><td>Camera Ready Deadline</td><td>2026-05-25</td></tr>
-  </table>
-</section>
+**Key statistics (from proposal):**
+- **230** reference point cloud models across **5** representative content categories :contentReference[oaicite:8]{index=8}  
+- Distorted samples generated using **MPEG G-PCC** codec:  
+  - **5,750** geometry-distorted samples  
+  - **7,130** attribute-distorted samples :contentReference[oaicite:9]{index=9}  
+- Subjective annotation spans **5 months**, conducted in **two phases**, involving **20–31** participants, with rigorous post-processing (statistics + outlier detection) for reliability. :contentReference[oaicite:10]{index=10}
 
-<section id="organizers">
-  <h2>Organizers</h2>
-  <ul>
-    <li>Liang Xie – Guangdong University of Technology (LXie5201@outlook.com)</li>
-    <li>Wei Gao – Peking University, Shenzhen (gaowei262@pku.edu.cn)</li>
-    <li>Ge Li – Peking University, Shenzhen (geli@pku.edu.cn)</li>
-    <li>Yanting Li – Guangdong University of Technology (1209847234@qq.com)</li>
-  </ul>
-</section>
+> 📦 **Data download / access**  
+> - Training set: *(to be released)*  
+> - Validation set: *(to be released)*  
+> - Test set: *(evaluation-only / hidden labels)*  
+>
+> ✅ Put your actual dataset links here once ready.
 
-</div>
+---
 
-<footer>
-  © ICME 2026 Grand Challenge – JND Prediction for Point Cloud Compression
-</footer>
+<a id="tasks"></a>
+## Tasks
 
-</body>
-</html>
+Participants are invited to develop algorithms to **predict subjective JND thresholds** for compressed point clouds, with a focus on:
+- **Geometry JND prediction**
+- **Attribute (color/texture) JND prediction**
+- Unified modeling that aligns predictions with **human perceptual thresholds**
+
+The goal is to improve human-centric perceptual modeling and facilitate perceptually optimized point cloud compression frameworks. :contentReference[oaicite:11]{index=11}
+
+---
+
+<a id="evaluation"></a>
+## Evaluation
+
+Submissions are evaluated on a held-out test set using correlation-based and error-based metrics between predicted JND values and subjective annotations. :contentReference[oaicite:12]{index=12}
+
+Let the subjective JND score be \( s_i \) and the predicted score be \( \hat{s}_i \) for \( i=1,\dots,N \). :contentReference[oaicite:13]{index=13}
+
+**Metrics:**
+1. **PLCC (Pearson Linear Correlation Coefficient)** :contentReference[oaicite:14]{index=14}  
+2. **SRCC (Spearman Rank-Order Correlation Coefficient)** :contentReference[oaicite:15]{index=15}  
+3. **KRCC (Kendall Rank Correlation Coefficient)** :contentReference[oaicite:16]{index=16}  
+4. **RMSE (Root Mean Squared Error)** :contentReference[oaicite:17]{index=17}  
+
+**Final leaderboard score:**  
+\[
+\text{Score} = \frac{\text{PLCC} + \text{SRCC}}{2}
+\]
+Final rankings are determined by **Score**, while PLCC, SRCC, KRCC, and RMSE are all reported. :contentReference[oaicite:18]{index=18}
+
+**Reproducibility & fairness:**
+- An **official evaluation script** will be released to compute all metrics and ensure reproducibility. :contentReference[oaicite:19]{index=19}  
+- Participants must use **only the official training data**. Any external data usage (pretraining/fine-tuning/distillation/model selection) is **strictly prohibited**. :contentReference[oaicite:20]{index=20}  
+
+---
+
+<a id="submission"></a>
+## Submission
+
+Participants must submit **prediction results** for the official test set following the provided **JSON format**, and all evaluations will be performed using the official evaluation script. :contentReference[oaicite:21]{index=21}
+
+**Submission platform:** *(to be announced)* :contentReference[oaicite:22]{index=22}  
+**Daily limit:** up to **3 submissions per team per day**. :contentReference[oaicite:23]{index=23}
+
+> ✅ Put your actual competition platform link here (e.g., CodaLab / Kaggle / EvalAI / internal server).
+
+---
+
+<a id="dates"></a>
+## Challenge Dates
+
+> ⚠️ The following dates are taken from the proposal and may be updated by organizers if necessary. :contentReference[oaicite:24]{index=24}  
+> All deadlines are at **11:59 PM UTC** on the corresponding day unless otherwise noted. :contentReference[oaicite:25]{index=25}
+
+| Event | Date |
+|---|---|
+| Registration Open | 2026-02-15 |
+| Training Data Release | 2026-03-10 |
+| Challenge Result Submission Deadline | 2026-04-25 |
+| Challenge Technical Paper Submission Deadline | 2026-05-10 |
+| Final Decisions | 2026-05-15 |
+| Camera Ready Submission Deadline | 2026-05-25 |
+
+---
+
+<a id="organizers"></a>
+## Organizers
+
+- **Liang Xie**, Guangdong University of Technology, Guangzhou, China (LXie5201@outlook.com) :contentReference[oaicite:26]{index=26}  
+- **Wei Gao**, Peking University, Shenzhen, China (gaowei262@pku.edu.cn) :contentReference[oaicite:27]{index=27}  
+- **Ge Li**, Peking University, Shenzhen, China (geli@pku.edu.cn) :contentReference[oaicite:28]{index=28}  
+- **Yanting Li**, Guangdong University of Technology, Guangzhou, China (1209847234@qq.com) :contentReference[oaicite:29]{index=29}  
+
+---
+
+<a id="contact"></a>
+## Contact
+
+For questions, please contact the organizers via email:
+
+- LXie5201@outlook.com  
+- gaowei262@pku.edu.cn  
+- geli@pku.edu.cn  
+- 1209847234@qq.com  
+
+---
+
+© ICME Grand Challenge | JND Prediction for 3D Point Cloud Compression
