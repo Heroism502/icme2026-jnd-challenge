@@ -1,144 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>ICME 2026 Grand Challenge | JND Prediction for 3D Point Cloud Compression</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- MathJax for equations -->
+  <!-- MathJax -->
   <script>
-    MathJax = {
-      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
-    };
+    MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: "Helvetica Neue", Arial, sans-serif;
-      color: #222;
-      scroll-behavior: smooth;
-    }
+    html, body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; color: #222; scroll-behavior: smooth; }
 
-    /* ===== Navigation Bar ===== */
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(255, 255, 255, 0.95);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    nav{
+      position: fixed; top: 0; left: 0; right: 0;
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       z-index: 1000;
-      padding: 0.8rem 1rem;
+      padding: 0.75rem 1rem;
       text-align: center;
     }
+    nav a{ margin: 0 14px; color:#003366; text-decoration:none; font-weight:600; font-size:0.95rem; }
+    nav a:hover{ text-decoration: underline; }
 
-    nav a {
-      margin: 0 14px;
-      color: #003366;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-
-    nav a:hover {
-      text-decoration: underline;
-    }
-
-    /* ===== Hero Section ===== */
-    .hero {
+    /* Key: use background shorthand with fallback gradient + image */
+    .hero{
+      position: relative;
       height: 70vh;
       min-height: 420px;
-      background-image: url("assets/icme2026-bg.jpg");
+
+      /* fallback first, image on top */
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.55)),
+        url("assets/icme2026-bg.jpg");
+
       background-size: cover;
-      background-position: center;
+      background-position: center center;
       background-repeat: no-repeat;
+
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      color: #ffffff;
+      color: #fff;
       padding: 0 1rem;
     }
 
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.45);
-    }
+    .hero-content{ max-width: 980px; padding-top: 70px; } /* avoid nav overlap */
+    .hero h1{ margin: 0 0 0.6rem; font-size: 3rem; text-shadow: 0 2px 10px rgba(0,0,0,0.6); }
+    .hero h2{ margin: 0; font-size: 1.35rem; font-weight: normal; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
 
-    .hero-content {
-      position: relative;
-      max-width: 900px;
-    }
-
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 0.6rem;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.6);
-    }
-
-    .hero h2 {
-      font-size: 1.4rem;
-      font-weight: normal;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
-    }
-
-    /* ===== Main Content ===== */
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 3rem 1.2rem;
-    }
-
-    section {
-      margin-bottom: 3.2rem;
-    }
-
-    section h2 {
-      color: #003366;
-      border-bottom: 2px solid #003366;
-      padding-bottom: 0.4rem;
-      margin-bottom: 1rem;
-    }
-
-    ul {
-      margin-left: 1.2rem;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-    }
-
-    th, td {
-      border: 1px solid #aaa;
-      padding: 0.7rem;
-      text-align: left;
-    }
-
-    .note {
-      background: #eef5ff;
-      border-left: 4px solid #003366;
-      padding: 1rem;
-      margin-top: 1rem;
-    }
-
-    footer {
-      background: #f2f2f2;
-      text-align: center;
-      padding: 1.2rem;
-      font-size: 0.9rem;
-      color: #555;
-    }
-
-    /* Anchor offset for fixed nav */
-    section[id] {
-      scroll-margin-top: 90px;
-    }
+    .container{ max-width: 1100px; margin: auto; padding: 2.5rem 1.2rem; }
+    section{ margin-bottom: 3rem; scroll-margin-top: 90px; }
+    section h2{ color:#003366; border-bottom:2px solid #003366; padding-bottom:0.4rem; margin-bottom: 1rem; }
+    ul{ margin-left: 1.2rem; }
+    table{ width:100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td{ border:1px solid #aaa; padding:0.7rem; text-align:left; }
+    .note{ background:#eef5ff; border-left:4px solid #003366; padding: 1rem; margin-top: 1rem; }
+    footer{ background:#f2f2f2; text-align:center; padding: 1.2rem; font-size:0.9rem; color:#555; }
   </style>
 </head>
 
@@ -158,8 +79,8 @@
 <div class="hero" id="home">
   <div class="hero-content">
     <h1>ICME 2026 Grand Challenge</h1>
-    <h2>Perceptual Just Noticeable Difference (JND) Modeling<br>
-        for 3D Point Cloud Compression</h2>
+    <h2>Perceptual Just Noticeable Difference (JND) Modeling for 3D Point Cloud Compression</h2>
+    <div id="bgStatus" style="margin-top:14px; font-size:0.9rem; opacity:0.85;"></div>
   </div>
 </div>
 
@@ -168,25 +89,22 @@
 <section id="introduction">
   <h2>Introduction</h2>
   <p>
-    Point clouds are a fundamental 3D representation widely used in immersive media,
-    autonomous driving, digital twins, virtual/augmented reality, and telepresence.
-    In practical systems, point cloud data are often compressed under strict constraints,
-    inevitably leading to perceptual quality degradation.
+    Point clouds are a fundamental 3D representation widely used in immersive media, autonomous driving,
+    digital twins, AR/VR, and telepresence. Compression is unavoidable in real systems and can cause
+    perceptual quality degradation.
   </p>
   <p>
-    <strong>Just Noticeable Difference (JND)</strong> characterizes the minimum distortion
-    level that becomes perceptible to human observers. Accurate JND modeling enables
-    perceptually optimized compression by removing imperceptible redundancies while
-    preserving visually critical information.
+    <strong>Just Noticeable Difference (JND)</strong> characterizes the minimum distortion level at which
+    quality degradation becomes perceptible. Accurate JND modeling supports perceptually optimized compression.
   </p>
 </section>
 
 <section id="dataset">
   <h2>Dataset: PKU-JND</h2>
   <ul>
-    <li>230 reference point cloud models across 5 representative content categories</li>
+    <li>230 reference point cloud models across 5 content categories</li>
     <li>5,750 geometry-distorted samples and 7,130 attribute-distorted samples</li>
-    <li>Distortions generated using MPEG G-PCC</li>
+    <li>Generated using MPEG G-PCC</li>
     <li>Large-scale subjective experiments with rigorous post-processing</li>
   </ul>
   <div class="note">
@@ -206,15 +124,9 @@
 <section id="evaluation">
   <h2>Evaluation</h2>
   <ul>
-    <li>Pearson Linear Correlation Coefficient (PLCC)</li>
-    <li>Spearman Rank-Order Correlation Coefficient (SRCC)</li>
-    <li>Kendall Rank Correlation Coefficient (KRCC)</li>
-    <li>Root Mean Squared Error (RMSE)</li>
+    <li>PLCC, SRCC, KRCC, RMSE</li>
   </ul>
-  <p>
-    Final leaderboard score:
-    $$\text{Score} = \frac{\text{PLCC} + \text{SRCC}}{2}$$
-  </p>
+  <p>Final leaderboard score: $$\text{Score} = \frac{\text{PLCC} + \text{SRCC}}{2}$$</p>
   <div class="note">
     Only the official training data may be used. External data usage is strictly prohibited.
   </div>
@@ -223,8 +135,8 @@
 <section id="submission">
   <h2>Submission</h2>
   <p>
-    Participants must submit predicted JND values for the official test set in the provided
-    JSON format. Each team may submit up to three results per day.
+    Submit predicted JND values for the official test set in the provided JSON format.
+    Up to three submissions per team per day.
   </p>
 </section>
 
@@ -253,9 +165,19 @@
 
 </div>
 
-<footer>
-  © IEEE ICME 2026 Grand Challenge — JND Prediction for 3D Point Cloud Compression
-</footer>
+<footer>© IEEE ICME 2026 Grand Challenge — JND Prediction for 3D Point Cloud Compression</footer>
+
+<script>
+  // quick debug helper: check whether the background image is reachable
+  (function () {
+    const imgUrl = "assets/icme2026-bg.jpg";
+    const status = document.getElementById("bgStatus");
+    const img = new Image();
+    img.onload = () => status.textContent = "Background loaded: " + imgUrl;
+    img.onerror = () => status.textContent = "Background NOT loaded. Please check: " + imgUrl + " (path/name/case or upload).";
+    img.src = imgUrl + "?v=" + Date.now(); // bust cache
+  })();
+</script>
 
 </body>
 </html>
