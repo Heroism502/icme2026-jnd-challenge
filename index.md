@@ -3,7 +3,7 @@ layout: default
 title: ICME 2025 Grand Challenge | JND Prediction for 3D Point Cloud Compression
 ---
 
-# ICME 2025 Grand Challenge
+# ICME 2026 Grand Challenge
 ## Perceptual Just Noticeable Difference (JND) Modeling for 3D Point Cloud Compression
 
 <nav>
