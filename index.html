@@ -5,7 +5,7 @@
   <title>ICME 2026 Grand Challenge | JND Prediction for 3D Point Cloud Compression</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Fonts (PVUW-like clean style) -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
@@ -21,7 +21,7 @@
 
   <style>
     :root{
-      --brand:#1f5fbf;         /* PVUW-ish blue */
+      --brand:#1f5fbf;
       --brand2:#0b3d91;
       --text:#1f2937;
       --muted:#6b7280;
@@ -38,7 +38,7 @@
       color:var(--text);
       background:var(--bg);
       scroll-behavior:smooth;
-      font-size:18px;          /* (2) 字体整体变大 */
+      font-size:18px;
       line-height:1.85;
     }
 
@@ -73,16 +73,14 @@
     .hero{
       position:relative;
       width:100%;
-      height:54vh;             /* (1) 缩短 Hero，减少“灰色区域占比” */
+      height:54vh;
       min-height:360px;
       background:
-        /* (1) 更轻的遮罩：不再大面积发灰/遮挡内容 */
         linear-gradient(180deg, rgba(0,0,0,.20), rgba(0,0,0,.35)),
         url("assets/icme2026-bg.jpg");
       background-size:cover;
       background-position:center;
       background-repeat:no-repeat;
-
       display:flex;
       align-items:center;
       justify-content:center;
@@ -93,7 +91,7 @@
 
     .hero-content{
       max-width:980px;
-      padding-top:74px; /* 给固定导航留空间 */
+      padding-top:74px;
     }
 
     .hero h1{
@@ -112,41 +110,71 @@
       text-shadow:0 6px 18px rgba(0,0,0,.35);
     }
 
-    /* (1) 让正文紧贴 Hero，下方不留大空白 */
+    /* ===== Layout ===== */
     .container{
       max-width:var(--maxw);
       margin:0 auto;
-      padding:1.6rem 1rem 2.8rem;   /* 原来 padding 太大导致“灰色块/空白感” */
+      padding:1.6rem 1rem 2.8rem;
     }
 
-    /* ===== Sections ===== */
     section{
       margin:2.2rem 0;
-      scroll-margin-top:92px; /* 锚点不被固定导航遮挡 */
+      scroll-margin-top:92px;
     }
 
+    /* ===== Big centered section title (PVUW-like) ===== */
     .section-title{
+      position:relative;
+      text-align:center;
       font-family:Poppins, Inter, sans-serif;
-      font-size:2.2rem;
-      margin:0 0 .6rem 0;
+      font-size:3rem;
+      font-weight:700;
+      margin:0 0 1.6rem 0;
       color:var(--brand2);
-      letter-spacing:.2px;
+      letter-spacing:.4px;
     }
 
     .section-title::after{
       content:"";
       display:block;
-      width:100%;
-      height:3px;
-      background:linear-gradient(90deg, var(--brand), rgba(31,95,191,.15));
-      margin-top:.35rem;
+      width:120px;
+      height:4px;
+      background:linear-gradient(90deg, var(--brand), rgba(31,95,191,.25));
+      margin:.55rem auto 0;
       border-radius:999px;
+    }
+
+    .section-title::before{
+      content: attr(data-watermark);
+      position:absolute;
+      left:50%;
+      top:55%;
+      transform:translate(-50%, -50%);
+      font-size:6rem;
+      font-weight:700;
+      color:rgba(31,95,191,0.06);
+      z-index:-1;
+      letter-spacing:.6px;
+      white-space:nowrap;
     }
 
     .lead{
       color:var(--muted);
       font-weight:500;
       margin-top:.2rem;
+      text-align:center;
+    }
+
+    .pill{
+      display:inline-block;
+      background:rgba(31,95,191,.10);
+      border:1px solid rgba(31,95,191,.18);
+      color:var(--brand2);
+      padding:.18rem .55rem;
+      border-radius:999px;
+      font-weight:700;
+      font-size:.92rem;
+      margin:.2rem .35rem .2rem 0;
     }
 
     .card{
@@ -162,18 +190,6 @@
     }
 
     li strong{ color:var(--brand2); }
-
-    .pill{
-      display:inline-block;
-      background:rgba(31,95,191,.10);
-      border:1px solid rgba(31,95,191,.18);
-      color:var(--brand2);
-      padding:.18rem .55rem;
-      border-radius:999px;
-      font-weight:700;
-      font-size:.92rem;
-      margin:.2rem .35rem .2rem 0;
-    }
 
     /* Table */
     table{
@@ -216,7 +232,6 @@
       font-size:.95rem;
     }
 
-    /* responsive */
     @media (max-width: 720px){
       .hero h1{ font-size:2.2rem; }
       .section-title{ font-size:1.7rem; }
@@ -252,32 +267,34 @@
 <main class="container">
 
   <section id="introduction">
-    <h2 class="section-title">Introduction</h2>
+    <h2 class="section-title" data-watermark="Introduction">Introduction</h2>
     <p class="lead">
-      Human-centric perceptual modeling for point clouds: <span class="pill">JND prediction</span>
-      <span class="pill">Point Cloud Compression</span> <span class="pill">PKU-JND</span>
+      Human-centric perceptual modeling for point clouds:
+      <span class="pill">JND Prediction</span>
+      <span class="pill">Point Cloud Compression</span>
+      <span class="pill">PKU-JND</span>
     </p>
-
     <div class="card">
       <p>
-        Point clouds are a fundamental 3D representation used in immersive media, autonomous driving, digital twins,
-        AR/VR, and telepresence. Compression under bandwidth/storage/compute constraints often introduces perceptual
-        quality degradation.
+        Point clouds are a fundamental 3D representation widely used in immersive media, autonomous driving,
+        digital twins, virtual/augmented reality, and telepresence. Compression under strict bandwidth, storage,
+        and compute constraints inevitably introduces perceptual quality degradation.
       </p>
       <p>
         <strong>Just Noticeable Difference (JND)</strong> characterizes the minimum distortion level that becomes
-        perceptible to human observers. Accurate JND modeling supports perceptually optimized compression by removing
-        imperceptible redundancies while preserving visually critical information.
+        perceptible to human observers. Accurate JND modeling supports perceptually optimized compression by
+        removing imperceptible redundancies while preserving visually critical information.
       </p>
       <p>
-        This challenge introduces <strong>PKU-JND</strong>, a large-scale benchmark dataset for point cloud compression
-        JND measurement, and encourages robust JND prediction methods under a standardized evaluation protocol.
+        This challenge introduces <strong>PKU-JND</strong>, a large-scale benchmark dataset dedicated to JND
+        measurement for point cloud compression and encourages robust JND prediction methods under a standardized
+        evaluation protocol.
       </p>
     </div>
   </section>
 
   <section id="dataset">
-    <h2 class="section-title">Dataset: PKU-JND</h2>
+    <h2 class="section-title" data-watermark="Dataset">Dataset: PKU-JND</h2>
     <div class="card">
       <ul>
         <li><strong>230</strong> reference point cloud models across <strong>5</strong> content categories</li>
@@ -292,7 +309,7 @@
   </section>
 
   <section id="tasks">
-    <h2 class="section-title">Tasks</h2>
+    <h2 class="section-title" data-watermark="Tasks">Tasks</h2>
     <div class="card">
       <ul>
         <li><strong>Geometry JND prediction</strong></li>
@@ -303,20 +320,16 @@
   </section>
 
   <section id="evaluation">
-    <h2 class="section-title">Evaluation</h2>
-
+    <h2 class="section-title" data-watermark="Evaluation">Evaluation</h2>
     <div class="card">
       <p class="lead">
         Metrics are computed between subjective JND scores and predicted scores on the held-out test set.
       </p>
-
       <p>
         Let the subjective JND score be $s_i$ and the predicted score be $\hat{s}_i$, for $i=1,\dots,N$.
       </p>
 
-      <h3 style="margin:.9rem 0 .35rem; color:var(--brand2); font-family:Poppins,Inter,sans-serif;">
-        (1) PLCC
-      </h3>
+      <h3>(1) PLCC</h3>
       <div class="eq">
         $$
         \mathrm{PLCC}=\frac{\sum_{i=1}^{N}(s_i-\bar{s})(\hat{s}_i-\bar{\hat{s}})}
@@ -324,9 +337,7 @@
         $$
       </div>
 
-      <h3 style="margin:.9rem 0 .35rem; color:var(--brand2); font-family:Poppins,Inter,sans-serif;">
-        (2) SRCC
-      </h3>
+      <h3>(2) SRCC</h3>
       <div class="eq">
         $$
         \mathrm{SRCC}=1-\frac{6\sum_{i=1}^{N} d_i^2}{N(N^2-1)}
@@ -334,9 +345,7 @@
       </div>
       <p class="lead">where $d_i$ is the difference between the ranks of $s_i$ and $\hat{s}_i$.</p>
 
-      <h3 style="margin:.9rem 0 .35rem; color:var(--brand2); font-family:Poppins,Inter,sans-serif;">
-        (3) KRCC
-      </h3>
+      <h3>(3) KRCC</h3>
       <div class="eq">
         $$
         \mathrm{KRCC}=\tau=\frac{C-D}{C+D}
@@ -344,18 +353,14 @@
       </div>
       <p class="lead">where $C$ and $D$ denote the numbers of concordant and discordant pairs.</p>
 
-      <h3 style="margin:.9rem 0 .35rem; color:var(--brand2); font-family:Poppins,Inter,sans-serif;">
-        (4) RMSE
-      </h3>
+      <h3>(4) RMSE</h3>
       <div class="eq">
         $$
         \mathrm{RMSE}=\sqrt{\frac{1}{N}\sum_{i=1}^{N}(s_i-\hat{s}_i)^2}
         $$
       </div>
 
-      <h3 style="margin:.9rem 0 .35rem; color:var(--brand2); font-family:Poppins,Inter,sans-serif;">
-        (5) Final Ranking Score
-      </h3>
+      <h3>(5) Final Ranking Score</h3>
       <div class="eq">
         $$
         \mathrm{Score}=\frac{\mathrm{PLCC}+\mathrm{SRCC}}{2}
@@ -369,26 +374,28 @@
       <div class="card" style="margin-top:1rem; background:#fff;">
         <p style="margin:0;">
           <strong style="color:var(--brand2);">Reproducibility & Fairness:</strong>
-          Only the official training data may be used. Any external data usage (pretraining/fine-tuning/distillation/model
-          selection) is strictly prohibited. An official evaluation script will be released.
+          Only the official training data may be used. Any external data usage (pretraining, fine-tuning,
+          distillation, or model selection) is strictly prohibited. An official evaluation script will be released.
         </p>
       </div>
     </div>
   </section>
 
   <section id="submission">
-    <h2 class="section-title">Submission</h2>
+    <h2 class="section-title" data-watermark="Submission">Submission</h2>
     <div class="card">
       <p>
         Submit predictions for the official test set following the provided <strong>JSON</strong> format.
         Each team may submit up to <strong>three</strong> results per day.
       </p>
-      <p class="lead">The official competition platform and submission instructions will be announced.</p>
+      <p class="lead">
+        The official competition platform and submission instructions will be announced.
+      </p>
     </div>
   </section>
 
   <section id="dates">
-    <h2 class="section-title">Dates</h2>
+    <h2 class="section-title" data-watermark="Dates">Dates</h2>
     <div class="card">
       <p class="lead">All deadlines are at 11:59 PM UTC unless otherwise noted.</p>
       <table>
@@ -404,12 +411,11 @@
   </section>
 
   <section id="organizers">
-    <h2 class="section-title">Organizers</h2>
+    <h2 class="section-title" data-watermark="Organizers">Organizers</h2>
     <div class="card">
       <ul>
         <li><strong>Liang Xie</strong> — Guangdong University of Technology (LXie5201@outlook.com)</li>
         <li><strong>Wei Gao</strong> — Peking University, Shenzhen (gaowei262@pku.edu.cn)</li>
-        <li><strong>Songlin Fan</strong> — Fudan University, Shanghai (slfan@pku.edu.cn)</li>
         <li><strong>Ge Li</strong> — Peking University, Shenzhen (geli@pku.edu.cn)</li>
         <li><strong>Yanting Li</strong> — Guangdong University of Technology (1209847234@qq.com)</li>
       </ul>
