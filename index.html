@@ -5,179 +5,422 @@
   <title>ICME 2026 Grand Challenge | JND Prediction for 3D Point Cloud Compression</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <!-- Fonts (PVUW-like clean style) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
   <!-- MathJax -->
   <script>
-    MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   <style>
-    html, body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; color: #222; scroll-behavior: smooth; }
+    :root{
+      --brand:#1f5fbf;         /* PVUW-ish blue */
+      --brand2:#0b3d91;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --bg:#ffffff;
+      --card:#f6f8fb;
+      --border:#e5e7eb;
+      --shadow:0 8px 24px rgba(16,24,40,.08);
+      --maxw:1100px;
+    }
 
+    html, body{
+      margin:0; padding:0;
+      font-family:Inter, Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:var(--bg);
+      scroll-behavior:smooth;
+      font-size:18px;          /* (2) 字体整体变大 */
+      line-height:1.85;
+    }
+
+    a{ color:var(--brand); text-decoration:none; font-weight:600; }
+    a:hover{ text-decoration:underline; }
+
+    /* ===== Navbar ===== */
     nav{
-      position: fixed; top: 0; left: 0; right: 0;
-      background: rgba(255,255,255,0.95);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      z-index: 1000;
-      padding: 0.75rem 1rem;
-      text-align: center;
+      position:fixed; top:0; left:0; right:0;
+      background:rgba(255,255,255,.92);
+      backdrop-filter:saturate(180%) blur(10px);
+      border-bottom:1px solid var(--border);
+      z-index:1000;
     }
-    nav a{ margin: 0 14px; color:#003366; text-decoration:none; font-weight:600; font-size:0.95rem; }
-    nav a:hover{ text-decoration: underline; }
+    .nav-inner{
+      max-width:var(--maxw);
+      margin:0 auto;
+      padding:.8rem 1rem;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+    .nav-inner a{
+      color:var(--brand2);
+      font-weight:700;
+      font-size:.95rem;
+    }
 
-    /* Key: use background shorthand with fallback gradient + image */
+    /* ===== Hero ===== */
     .hero{
-      position: relative;
-      height: 70vh;
-      min-height: 420px;
-
-      /* fallback first, image on top */
+      position:relative;
+      width:100%;
+      height:54vh;             /* (1) 缩短 Hero，减少“灰色区域占比” */
+      min-height:360px;
       background:
-        linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.55)),
+        /* (1) 更轻的遮罩：不再大面积发灰/遮挡内容 */
+        linear-gradient(180deg, rgba(0,0,0,.20), rgba(0,0,0,.35)),
         url("assets/icme2026-bg.jpg");
+      background-size:cover;
+      background-position:center;
+      background-repeat:no-repeat;
 
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: #fff;
-      padding: 0 1rem;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:#fff;
+      padding:0 1rem;
     }
 
-    .hero-content{ max-width: 980px; padding-top: 70px; } /* avoid nav overlap */
-    .hero h1{ margin: 0 0 0.6rem; font-size: 3rem; text-shadow: 0 2px 10px rgba(0,0,0,0.6); }
-    .hero h2{ margin: 0; font-size: 1.35rem; font-weight: normal; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+    .hero-content{
+      max-width:980px;
+      padding-top:74px; /* 给固定导航留空间 */
+    }
 
-    .container{ max-width: 1100px; margin: auto; padding: 2.5rem 1.2rem; }
-    section{ margin-bottom: 3rem; scroll-margin-top: 90px; }
-    section h2{ color:#003366; border-bottom:2px solid #003366; padding-bottom:0.4rem; margin-bottom: 1rem; }
-    ul{ margin-left: 1.2rem; }
-    table{ width:100%; border-collapse: collapse; margin-top: 1rem; }
-    th, td{ border:1px solid #aaa; padding:0.7rem; text-align:left; }
-    .note{ background:#eef5ff; border-left:4px solid #003366; padding: 1rem; margin-top: 1rem; }
-    footer{ background:#f2f2f2; text-align:center; padding: 1.2rem; font-size:0.9rem; color:#555; }
+    .hero h1{
+      font-family:Poppins, Inter, sans-serif;
+      font-size:3.15rem;
+      line-height:1.15;
+      margin:0 0 .65rem 0;
+      text-shadow:0 8px 22px rgba(0,0,0,.35);
+      letter-spacing:.2px;
+    }
+
+    .hero .subtitle{
+      font-size:1.18rem;
+      font-weight:600;
+      opacity:.96;
+      text-shadow:0 6px 18px rgba(0,0,0,.35);
+    }
+
+    /* (1) 让正文紧贴 Hero，下方不留大空白 */
+    .container{
+      max-width:var(--maxw);
+      margin:0 auto;
+      padding:1.6rem 1rem 2.8rem;   /* 原来 padding 太大导致“灰色块/空白感” */
+    }
+
+    /* ===== Sections ===== */
+    section{
+      margin:2.2rem 0;
+      scroll-margin-top:92px; /* 锚点不被固定导航遮挡 */
+    }
+
+    .section-title{
+      font-family:Poppins, Inter, sans-serif;
+      font-size:2.2rem;
+      margin:0 0 .6rem 0;
+      color:var(--brand2);
+      letter-spacing:.2px;
+    }
+
+    .section-title::after{
+      content:"";
+      display:block;
+      width:100%;
+      height:3px;
+      background:linear-gradient(90deg, var(--brand), rgba(31,95,191,.15));
+      margin-top:.35rem;
+      border-radius:999px;
+    }
+
+    .lead{
+      color:var(--muted);
+      font-weight:500;
+      margin-top:.2rem;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:1.15rem 1.2rem;
+      box-shadow:var(--shadow);
+    }
+
+    ul{
+      margin:.65rem 0 0 1.25rem;
+    }
+
+    li strong{ color:var(--brand2); }
+
+    .pill{
+      display:inline-block;
+      background:rgba(31,95,191,.10);
+      border:1px solid rgba(31,95,191,.18);
+      color:var(--brand2);
+      padding:.18rem .55rem;
+      border-radius:999px;
+      font-weight:700;
+      font-size:.92rem;
+      margin:.2rem .35rem .2rem 0;
+    }
+
+    /* Table */
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:.8rem;
+      font-size:1rem;
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:12px;
+      overflow:hidden;
+    }
+    th, td{
+      padding:.75rem .8rem;
+      border-bottom:1px solid var(--border);
+      text-align:left;
+    }
+    th{
+      background:rgba(31,95,191,.08);
+      color:var(--brand2);
+      font-weight:800;
+    }
+    tr:last-child td{ border-bottom:none; }
+
+    .eq{
+      background:#fff;
+      border:1px dashed rgba(31,95,191,.35);
+      border-radius:12px;
+      padding:.8rem 1rem;
+      margin:.8rem 0;
+      overflow-x:auto;
+    }
+
+    footer{
+      background:#f3f4f6;
+      border-top:1px solid var(--border);
+      text-align:center;
+      padding:1.1rem;
+      color:var(--muted);
+      font-size:.95rem;
+    }
+
+    /* responsive */
+    @media (max-width: 720px){
+      .hero h1{ font-size:2.2rem; }
+      .section-title{ font-size:1.7rem; }
+      html, body{ font-size:17px; }
+    }
   </style>
 </head>
 
 <body>
 
 <nav>
-  <a href="#home">Home</a>
-  <a href="#introduction">Introduction</a>
-  <a href="#dataset">Dataset</a>
-  <a href="#tasks">Tasks</a>
-  <a href="#evaluation">Evaluation</a>
-  <a href="#submission">Submission</a>
-  <a href="#dates">Dates</a>
-  <a href="#organizers">Organizers</a>
+  <div class="nav-inner">
+    <a href="#home">Home</a>
+    <a href="#introduction">Introduction</a>
+    <a href="#dataset">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#evaluation">Evaluation</a>
+    <a href="#submission">Submission</a>
+    <a href="#dates">Dates</a>
+    <a href="#organizers">Organizers</a>
+  </div>
 </nav>
 
-<div class="hero" id="home">
+<header class="hero" id="home">
   <div class="hero-content">
     <h1>ICME 2026 Grand Challenge</h1>
-    <h2>Perceptual Just Noticeable Difference (JND) Modeling for 3D Point Cloud Compression</h2>
-    <div id="bgStatus" style="margin-top:14px; font-size:0.9rem; opacity:0.85;"></div>
+    <div class="subtitle">
+      Perceptual Just Noticeable Difference (JND) Modeling for 3D Point Cloud Compression
+    </div>
   </div>
-</div>
+</header>
 
-<div class="container">
+<main class="container">
 
-<section id="introduction">
-  <h2>Introduction</h2>
-  <p>
-    Point clouds are a fundamental 3D representation widely used in immersive media, autonomous driving,
-    digital twins, AR/VR, and telepresence. Compression is unavoidable in real systems and can cause
-    perceptual quality degradation.
-  </p>
-  <p>
-    <strong>Just Noticeable Difference (JND)</strong> characterizes the minimum distortion level at which
-    quality degradation becomes perceptible. Accurate JND modeling supports perceptually optimized compression.
-  </p>
-</section>
+  <section id="introduction">
+    <h2 class="section-title">Introduction</h2>
+    <p class="lead">
+      Human-centric perceptual modeling for point clouds: <span class="pill">JND prediction</span>
+      <span class="pill">Point Cloud Compression</span> <span class="pill">PKU-JND</span>
+    </p>
 
-<section id="dataset">
-  <h2>Dataset: PKU-JND</h2>
-  <ul>
-    <li>230 reference point cloud models across 5 content categories</li>
-    <li>5,750 geometry-distorted samples and 7,130 attribute-distorted samples</li>
-    <li>Generated using MPEG G-PCC</li>
-    <li>Large-scale subjective experiments with rigorous post-processing</li>
-  </ul>
-  <div class="note">
-    Dataset download links will be released with the official challenge announcement.
-  </div>
-</section>
+    <div class="card">
+      <p>
+        Point clouds are a fundamental 3D representation used in immersive media, autonomous driving, digital twins,
+        AR/VR, and telepresence. Compression under bandwidth/storage/compute constraints often introduces perceptual
+        quality degradation.
+      </p>
+      <p>
+        <strong>Just Noticeable Difference (JND)</strong> characterizes the minimum distortion level that becomes
+        perceptible to human observers. Accurate JND modeling supports perceptually optimized compression by removing
+        imperceptible redundancies while preserving visually critical information.
+      </p>
+      <p>
+        This challenge introduces <strong>PKU-JND</strong>, a large-scale benchmark dataset for point cloud compression
+        JND measurement, and encourages robust JND prediction methods under a standardized evaluation protocol.
+      </p>
+    </div>
+  </section>
 
-<section id="tasks">
-  <h2>Tasks</h2>
-  <ul>
-    <li>Geometry JND prediction</li>
-    <li>Attribute (color) JND prediction</li>
-    <li>Unified perceptual JND modeling</li>
-  </ul>
-</section>
+  <section id="dataset">
+    <h2 class="section-title">Dataset: PKU-JND</h2>
+    <div class="card">
+      <ul>
+        <li><strong>230</strong> reference point cloud models across <strong>5</strong> content categories</li>
+        <li>Distortions generated using <strong>MPEG G-PCC</strong></li>
+        <li><strong>5,750</strong> geometry-distorted samples; <strong>7,130</strong> attribute-distorted samples</li>
+        <li>Subjective experiments (two phases, 20–31 participants) with rigorous post-processing</li>
+      </ul>
+      <p class="lead" style="margin-top:.7rem;">
+        Dataset download links will be released with the official challenge announcement.
+      </p>
+    </div>
+  </section>
 
-<section id="evaluation">
-  <h2>Evaluation</h2>
-  <ul>
-    <li>PLCC, SRCC, KRCC, RMSE</li>
-  </ul>
-  <p>Final leaderboard score: $$\text{Score} = \frac{\text{PLCC} + \text{SRCC}}{2}$$</p>
-  <div class="note">
-    Only the official training data may be used. External data usage is strictly prohibited.
-  </div>
-</section>
+  <section id="tasks">
+    <h2 class="section-title">Tasks</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Geometry JND prediction</strong></li>
+        <li><strong>Attribute (color) JND prediction</strong></li>
+        <li><strong>Unified perceptual JND modeling</strong></li>
+      </ul>
+    </div>
+  </section>
 
-<section id="submission">
-  <h2>Submission</h2>
-  <p>
-    Submit predicted JND values for the official test set in the provided JSON format.
-    Up to three submissions per team per day.
-  </p>
-</section>
+  <section id="evaluation">
+    <h2 class="section-title">Evaluation</h2>
 
-<section id="dates">
-  <h2>Challenge Dates</h2>
-  <table>
-    <tr><th>Event</th><th>Date (UTC)</th></tr>
-    <tr><td>Registration Open</td><td>2026-02-15</td></tr>
-    <tr><td>Training Data Release</td><td>2026-03-10</td></tr>
-    <tr><td>Result Submission Deadline</td><td>2026-04-25</td></tr>
-    <tr><td>Technical Paper Deadline</td><td>2026-05-10</td></tr>
-    <tr><td>Final Decisions</td><td>2026-05-15</td></tr>
-    <tr><td>Camera Ready Deadline</td><td>2026-05-25</td></tr>
-  </table>
-</section>
+    <div class="card">
+      <p class="lead">
+        Metrics are computed between subjective JND scores and predicted scores on the held-out test set.
+      </p>
 
-<section id="organizers">
-  <h2>Organizers</h2>
-  <ul>
-    <li>Liang Xie — Guangdong University of Technology (LXie5201@outlook.com)</li>
-    <li>Wei Gao — Peking University, Shenzhen (gaowei262@pku.edu.cn)</li>
-    <li>Ge Li — Peking University, Shenzhen (geli@pku.edu.cn)</li>
-    <li>Yanting Li — Guangdong University of Technology (1209847234@qq.com)</li>
-  </ul>
-</section>
+      <p>
+        Let the subjective JND score be $s_i$ and the predicted score be $\hat{s}_i$, for $i=1,\dots,N$.
+      </p>
 
-</div>
+      <h3 style="margin:.9rem 0 .35rem; color:var(--brand2); font-family:Poppins,Inter,sans-serif;">
+        (1) PLCC
+      </h3>
+      <div class="eq">
+        $$
+        \mathrm{PLCC}=\frac{\sum_{i=1}^{N}(s_i-\bar{s})(\hat{s}_i-\bar{\hat{s}})}
+        {\sqrt{\sum_{i=1}^{N}(s_i-\bar{s})^2}\sqrt{\sum_{i=1}^{N}(\hat{s}_i-\bar{\hat{s}})^2}}
+        $$
+      </div>
 
-<footer>© IEEE ICME 2026 Grand Challenge — JND Prediction for 3D Point Cloud Compression</footer>
+      <h3 style="margin:.9rem 0 .35rem; color:var(--brand2); font-family:Poppins,Inter,sans-serif;">
+        (2) SRCC
+      </h3>
+      <div class="eq">
+        $$
+        \mathrm{SRCC}=1-\frac{6\sum_{i=1}^{N} d_i^2}{N(N^2-1)}
+        $$
+      </div>
+      <p class="lead">where $d_i$ is the difference between the ranks of $s_i$ and $\hat{s}_i$.</p>
 
-<script>
-  // quick debug helper: check whether the background image is reachable
-  (function () {
-    const imgUrl = "assets/icme2026-bg.jpg";
-    const status = document.getElementById("bgStatus");
-    const img = new Image();
-    img.onload = () => status.textContent = "Background loaded: " + imgUrl;
-    img.onerror = () => status.textContent = "Background NOT loaded. Please check: " + imgUrl + " (path/name/case or upload).";
-    img.src = imgUrl + "?v=" + Date.now(); // bust cache
-  })();
-</script>
+      <h3 style="margin:.9rem 0 .35rem; color:var(--brand2); font-family:Poppins,Inter,sans-serif;">
+        (3) KRCC
+      </h3>
+      <div class="eq">
+        $$
+        \mathrm{KRCC}=\tau=\frac{C-D}{C+D}
+        $$
+      </div>
+      <p class="lead">where $C$ and $D$ denote the numbers of concordant and discordant pairs.</p>
+
+      <h3 style="margin:.9rem 0 .35rem; color:var(--brand2); font-family:Poppins,Inter,sans-serif;">
+        (4) RMSE
+      </h3>
+      <div class="eq">
+        $$
+        \mathrm{RMSE}=\sqrt{\frac{1}{N}\sum_{i=1}^{N}(s_i-\hat{s}_i)^2}
+        $$
+      </div>
+
+      <h3 style="margin:.9rem 0 .35rem; color:var(--brand2); font-family:Poppins,Inter,sans-serif;">
+        (5) Final Ranking Score
+      </h3>
+      <div class="eq">
+        $$
+        \mathrm{Score}=\frac{\mathrm{PLCC}+\mathrm{SRCC}}{2}
+        $$
+      </div>
+
+      <p class="lead">
+        Final rankings are determined by <strong>Score</strong>. PLCC, SRCC, KRCC, and RMSE are also reported.
+      </p>
+
+      <div class="card" style="margin-top:1rem; background:#fff;">
+        <p style="margin:0;">
+          <strong style="color:var(--brand2);">Reproducibility & Fairness:</strong>
+          Only the official training data may be used. Any external data usage (pretraining/fine-tuning/distillation/model
+          selection) is strictly prohibited. An official evaluation script will be released.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="submission">
+    <h2 class="section-title">Submission</h2>
+    <div class="card">
+      <p>
+        Submit predictions for the official test set following the provided <strong>JSON</strong> format.
+        Each team may submit up to <strong>three</strong> results per day.
+      </p>
+      <p class="lead">The official competition platform and submission instructions will be announced.</p>
+    </div>
+  </section>
+
+  <section id="dates">
+    <h2 class="section-title">Dates</h2>
+    <div class="card">
+      <p class="lead">All deadlines are at 11:59 PM UTC unless otherwise noted.</p>
+      <table>
+        <tr><th>Event</th><th>Date (UTC)</th></tr>
+        <tr><td>Registration Open</td><td>2026-02-15</td></tr>
+        <tr><td>Training Data Release</td><td>2026-03-10</td></tr>
+        <tr><td>Challenge Result Submission Deadline</td><td>2026-04-25</td></tr>
+        <tr><td>Challenge Technical Paper Submission Deadline</td><td>2026-05-10</td></tr>
+        <tr><td>Final Decisions</td><td>2026-05-15</td></tr>
+        <tr><td>Camera Ready Submission Deadline</td><td>2026-05-25</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="organizers">
+    <h2 class="section-title">Organizers</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Liang Xie</strong> — Guangdong University of Technology (LXie5201@outlook.com)</li>
+        <li><strong>Wei Gao</strong> — Peking University, Shenzhen (gaowei262@pku.edu.cn)</li>
+        <li><strong>Songlin Fan</strong> — Fudan University, Shanghai (slfan@pku.edu.cn)</li>
+        <li><strong>Ge Li</strong> — Peking University, Shenzhen (geli@pku.edu.cn)</li>
+        <li><strong>Yanting Li</strong> — Guangdong University of Technology (1209847234@qq.com)</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  © IEEE ICME 2026 Grand Challenge — JND Prediction for 3D Point Cloud Compression
+</footer>
 
 </body>
 </html>
